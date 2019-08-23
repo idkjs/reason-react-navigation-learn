@@ -33,16 +33,18 @@ module HomeScreen = {
     </View>;
   };
 };
-module AppNavigator = {
-  let routes = {"Home": HomeScreen.make};
+// module AppNavigator = {
+//   let routes = {"Home": HomeScreen.make};
 
-  let navigator = StackNavigator.(make(routes));
-};
+//   let navigator = StackNavigator.(make(routes));
+// };
 module AppContainer =
   AppContainer.Make({
     type screenProps = {. "someProp": int};
 
-    let navigator = AppNavigator.navigator;
+    // let navigator = AppNavigator.navigator;
+    // using shorthand
+    let navigator = StackNavigator.(make({"Home": HomeScreen.make}));
   });
 [@react.component]
 let app = () => {
