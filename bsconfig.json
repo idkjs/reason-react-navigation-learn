@@ -12,7 +12,8 @@
     ],
   "sources": [
     {
-      "dir": "src"
+      "dir": "src",
+      "subdirs":true
     }
   ],
   "suffix": ".bs.js",
