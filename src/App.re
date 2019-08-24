@@ -14,8 +14,15 @@ module HomeScreen = {
 };
 module DetailsScreen = {
   [@react.component]
-  let make = () => {
-    <Screen name="Details Screen" />;
+  let make = (~navigation: Navigation.t) => {
+    <Screen name="Details Screen"><Button
+        title="Go to Details Screen Again"
+        // js version: `onPress={() => this.props.navigation.push('Details')}`
+        // `navigate` doesnt go anywhere because you are already on this page
+        //  `push` in js, lets you indicate that you want to go to that screen anyway.
+        onPress={_ => navigation->Navigation.navigate("Details")}
+      />
+    </Screen>;
   };
 };
 module RootStack = {
