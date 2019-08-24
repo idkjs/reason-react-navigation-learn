@@ -4,14 +4,22 @@ open ReactNavigation;
 module HomeScreen = {
   [@react.component]
   let make = (~navigation: Navigation.t) => {
+    // trying this to see if we can work towards json serializable values to use with deeplinking as mentioned here: https://reactnavigation.org/docs/en/params.html
+    let bucklescript = {
+      "info": {
+        itemId: 86,
+        otherParam: "anything you want here",
+      },
+    };
+
+    let param = bucklescript##info;
+    Js.log2("TEST", Js.Json.test(param, Object)); // true
     <Screen name="Home Screen">
       <Button
         title="Go to Details"
         onPress={_ =>
-          navigation->Navigation.navigateWithParams(
-            "Details",
-            {"itemId": 86, "otherParam": "anything you want here"},
-          )
+          navigation->Navigation.navigateWithParams("Details", param)
+          // {"itemId": 86, "otherParam": "anything you want here"},
         }
         // js version
         // onPress={() => {

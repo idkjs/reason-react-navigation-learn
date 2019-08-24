@@ -63,3 +63,31 @@ Going back to previous screen in `reason`:
 This gif demonstrates how all screens remain mounted even when you navigate away. Notice that on the `HomeStack` we navigate to `Details` then we navigate to the `Settings` stack via the tabs at the bottom. When we navigate back to the `HomeStack` we are still on the `Details` screen in that stack since that is the screen we were on when we left it.
 
 ![navigation-lifecycle](./lifeCycleDemo.gif)
+
+## Passing Props / Json Serializing
+
+Trying this to see if we can work towards json serializable values to use with deeplinking as mentioned here: <https://reactnavigation.org/docs/en/params.html>.
+
+```reason
+[@react.component]
+  let make = (~navigation: Navigation.t) => {
+    // trying this to see if we can work towards json serializable values to use with deeplinking as mentioned here: https://reactnavigation.org/docs/en/params.html
+    let bucklescript = {
+      "info": {
+        itemId: 86,
+        otherParam: "anything you want here",
+      },
+    };
+
+    let param = bucklescript##info;
+    Js.log2("TEST", Js.Json.test(param, Object)); // true
+    <Screen name="Home Screen">
+      <Button
+        title="Go to Details"
+        onPress={_ =>
+          navigation->Navigation.navigateWithParams("Details", param)
+          // {"itemId": 86, "otherParam": "anything you want here"},
+        }
+      />
+    </Screen>;
+```
