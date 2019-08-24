@@ -3,7 +3,8 @@
 
 [@react.component]
 let app = () => {
-  open PassingParamsDemo;
+  // open PassingParamsDemo;
+  open SettingHeaderDemo;
   let screenProps = {"someProp": 42};
   <TabNavigator screenProps />;
 };

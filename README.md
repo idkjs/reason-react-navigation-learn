@@ -91,3 +91,25 @@ Trying this to see if we can work towards json serializable values to use with d
       />
     </Screen>;
 ```
+
+## [Setting Header Title](https://reactnavigation.org/docs/en/headers.html#setting-the-header-title)
+
+```js
+ static navigationOptions = {
+    title: 'Home',
+  };
+```
+
+```reason
+[@react.component]
+  let make = (~navigation: Navigation.t) => {
+    <Screen name="Home Screen">
+      <Button
+        title="Go to Details"
+        onPress={_ =>
+          navigation->Navigation.navigateWithParams("Details", {"itemId": 86, "otherParam": "anything you want here"})
+        }>
+    </Screen>;
+  };
+  make->NavigationOptions.setNavigationOptions(NavigationOptions.t(~title="Home", ()));
+```
