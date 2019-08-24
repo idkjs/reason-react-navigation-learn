@@ -1,34 +1,35 @@
 open ReactNative;
 
+open Expo;
 
-  open Expo;
+let styles =
+  Style.(
+    StyleSheet.create({
+      "container":
+        style(
+          ~flex=1.,
+          ~justifyContent=`center,
+          ~alignItems=`center,
+          ~backgroundColor="#F5FCFF",
+          (),
+        ),
+      "instructions": style(~textAlign=`center, ~color="#ffffff", ()),
+    })
+  );
 
-  let styles =
-    Style.(
-      StyleSheet.create({
-        "container":
-          style(
-            ~flex=1.,
-            ~justifyContent=`center,
-            ~alignItems=`center,
-            ~backgroundColor="#F5FCFF",
-            (),
-          ),
-        "instructions": style(~textAlign=`center, ~color="#ffffff", ()),
-      })
-    );
-
-  [@react.component]
-  let make = (~name) => {
-    <View style=styles##container>
-      <LinearGradient
-        colors=[|"#DD4B39", "#C62C19"|]
-        start=[|0.0, 0.0|]
-        _end=[|1.0, 1.0|]
-        style=Style.(style(~padding=dp(12.), ~borderRadius=12., ()))>
-        <Text style=styles##instructions>
-          {React.string(name)}
-        </Text>
-      </LinearGradient>
-    </View>;
-  };
+[@react.component]
+let make = (~name, ~children=?) => {
+  <View style=styles##container>
+    <LinearGradient
+      colors=[|"#DD4B39", "#C62C19"|]
+      start=[|0.0, 0.0|]
+      _end=[|1.0, 1.0|]
+      style=Style.(style(~padding=dp(12.), ~borderRadius=12., ()))>
+      <Text style=styles##instructions> {React.string(name)} </Text>
+      {switch (children) {
+       | Some(children) => children
+       | None => React.null
+       }}
+    </LinearGradient>
+  </View>;
+};

@@ -1,10 +1,15 @@
-// open ReactNative;
+open ReactNative;
 open ReactNavigation;
 
 module HomeScreen = {
   [@react.component]
-  let make = () => {
-    <Screen name="Home Screen" />;
+  let make = (~navigation: Navigation.t) => {
+    <Screen name="Home Screen">
+      <Button
+        title="Go to Details"
+        onPress={_ => navigation->Navigation.navigate("Details")}
+      />
+    </Screen>;
   };
 };
 module DetailsScreen = {
@@ -17,10 +22,10 @@ module RootStack = {
   let navigator =
     StackNavigator.(
       make({
-          "Home": HomeScreen.make,
-          "Details": DetailsScreen.make,
-          "initialRouteName":"Details"
-        })
+        "Home": HomeScreen.make,
+        "Details": DetailsScreen.make,
+        "initialRouteName": "Details",
+      })
     );
 };
 
