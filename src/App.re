@@ -3,11 +3,19 @@ open ReactNavigation;
 module MyScreen = {
   [@react.component]
   let make = (~navigation: Navigation.t) => {
-    <Screen name="NavEvents Screen">
-      <NavigationEventsScreen navigation />
+    <Screen name="NavFocus Screen">
+      <WithNavFocusScreen.Wrapper isFocused=false/>
     </Screen>;
   };
 };
+// module WithNavFocusScreen = {
+//   [@react.component]
+//   let make = (~navigation: Navigation.t) => {
+//     <Screen name="NavEvents Screen">
+//       <NavigationEventsScreen navigation />
+//     </Screen>;
+//   };
+// };
 module HomeScreen = {
   [@react.component]
   let make = (~navigation: Navigation.t) => {
@@ -94,8 +102,14 @@ module AppContainer =
     // Reason version of https://snack.expo.io/@react-navigation/hello-react-navigation-v3 and https://reactnavigation.org/docs/en/hello-react-navigation.html#summary
     let navigator = RootStack.navigator;
   });
+// [@react.component]
+// let app = () => {
+//   let screenProps = {"someProp": 42};
+//   <AppContainer screenProps />;
+// };
 [@react.component]
 let app = () => {
+  open LifeCycleDemo;
   let screenProps = {"someProp": 42};
-  <AppContainer screenProps />;
+  <TabNavigator screenProps />;
 };

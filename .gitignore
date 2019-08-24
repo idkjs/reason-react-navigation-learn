@@ -9,3 +9,6 @@ npm-debug.*
 .bsb.lock
 lib
 .merlin
+scratch
+*.mov
+node_modules

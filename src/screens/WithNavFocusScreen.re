@@ -22,7 +22,7 @@ module FocusStateLabel = {
 };
 // withNavigationFocus returns a component that wraps FocusStateLabel and passes
 // in the navigation prop
-module WithNavigationFocus = {
+module Wrapper = {
   open WithNavigationFocus;
   let makeProps = FocusStateLabel.makeProps;
   let make = withNavigationFocus(FocusStateLabel.make);
