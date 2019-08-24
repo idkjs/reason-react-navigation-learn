@@ -74,7 +74,10 @@ module DetailsScreen = {
       <Button title="Go back" onPress={_ => navigation->Navigation.goBack} />
     </View>;
   };
-  make->NavigationOptions.setNavigationOptions(NavigationOptions.t(~title="Details", ()));
+  make->NavigationOptions.setDynamicNavigationOptions(params => {
+    let title = params##navigation->Navigation.getParamWithDefault("otherParam", "A Nested Details Screen");
+    (NavigationOptions.t(~title, ()));
+  });
 };
 module SettingsScreen = {
   [@react.component]
