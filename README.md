@@ -184,3 +184,69 @@ include ReactNavigation.Navigation;
     (NavigationOptions.t(~title, ()));
   });
 ```
+
+## [Adjusting header styles](https://reactnavigation.org/docs/en/headers.html#adjusting-header-styles)
+
+From the docs:
+> There are three key properties to use when customizing the style of your > header: `headerStyle`, `headerTintColor`, and `headerTitleStyle`.
+
+> `headerStyle`: a style object that will be applied to the View that wraps the header. If you set backgroundColor on it, that will be the color of your header.
+
+> `headerTintColor`: the back button and title both use this property as their color. In the example below, we set the tint color to white (#fff) so the back button and the header title would be white.
+
+> `headerTitleStyle`: if we want to customize the `fontFamily`, `fontWeight` and other Text style properties for the title, we can use this to do it.
+
+```js
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
+
+  /* render function, etc */
+}
+```
+
+Using ReasonML:
+
+```reason
+[@react.component]
+  let make = (~navigation: Navigation.t) => {
+    <View
+      style=Style.(
+        style(~flex=1., ~alignItems=`center, ~justifyContent=`center, ())
+      )>
+      <Text> {"Home Screen" |> React.string} </Text>
+      /* rest of your component*/
+    </View>;
+  };
+
+    make->NavigationOptions.setNavigationOptions(
+    NavigationOptions.t(
+      ~headerTitleStyle=Style.(style(~fontWeight=`bold, ())),
+      ~headerTintColor="#fff",
+      ~headerStyle=Style.(style(~backgroundColor="#f4511e", ())),
+      ~title="Home",
+      (),
+    ),
+  );
+  // alternatively, define the prop and pass it to `NavigationOptions`
+  // let headerStyle = Style.(style(~backgroundColor="#f4511e", ()));
+  // let headerTitleStyle = Style.(style(~fontWeight=`bold, ()));
+  // let headerTintColor = "#fff";
+  // make->NavigationOptions.setNavigationOptions(
+  //   NavigationOptions.t(
+  //     ~headerTitleStyle,
+  //     ~headerTintColor,
+  //     ~headerStyle,
+  //     ~title="Home",
+  //     (),
+  //   ),
+  // );
+```

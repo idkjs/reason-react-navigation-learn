@@ -4,7 +4,7 @@
 [@react.component]
 let app = () => {
   // open PassingParamsDemo;
-  open SettingHeaderDemo;
+  open SettingHeaderStyles;
   let screenProps = {"someProp": 42};
-  <TabNavigator screenProps />;
+  <AppContainer screenProps />;
 };
