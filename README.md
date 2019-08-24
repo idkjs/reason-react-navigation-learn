@@ -46,3 +46,14 @@ Going back to previous screen in `reason`:
   onPress={_ => navigation->Navigation.goBack}
 />
 ```
+
+## [popToTop](https://reactnavigation.org/docs/en/navigating.html#summary)
+
+`popToTop` take you to the top route in the current stack so this will go back to `Home` route.
+
+```reason
+<Button
+  title="PopToTop"
+  onPress={_ => navigation->Navigation.popToTop}
+/>
+```

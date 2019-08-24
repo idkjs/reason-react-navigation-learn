@@ -15,17 +15,24 @@ module HomeScreen = {
 module DetailsScreen = {
   [@react.component]
   let make = (~navigation: Navigation.t) => {
-    <Screen name="Details Screen"><Button
+    <Screen name="Details Screen">
+      <Button
         title="Go to Details Screen Again"
         // js version: `onPress={() => this.props.navigation.push('Details')}`
         // `navigate` doesnt go anywhere because you are already on this page
         //  `push` in js, lets you indicate that you want to go to that screen anyway.
         onPress={_ => navigation->Navigation.navigate("Details")}
       />
+      <Button title="Go back" onPress={_ => navigation->Navigation.goBack} />
       <Button
-          title="Go back"
-          onPress={_ => navigation->Navigation.goBack}
-        />
+        title="Go to Home"
+        onPress={_ => navigation->Navigation.navigate("Home")}
+      />
+      //  `popToTop` take you to the top route in the current stack so this will go back to `Home` route..
+      <Button
+        title="PopToTop"
+        onPress={_ => navigation->Navigation.popToTop}
+      />
     </Screen>;
   };
 };
