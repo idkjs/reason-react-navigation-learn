@@ -143,3 +143,44 @@ Use `setDynamicNavigationOptions` and pass in the `params` object. The `title` i
     (NavigationOptions.t(~title, ()));
   });
 ```
+
+## [Updating `navigationOptions` with `setParams`](https://reactnavigation.org/docs/en/headers.html#updating-navigationoptions-with-setparams)
+
+```js
+        <Button
+          title="Update the title"
+          onPress={() =>
+            this.props.navigation.setParams({ otherParam: 'Updated!' })}
+        />
+```
+
+The [`reason-react-navigation`](https://github.com/reasonml-community/reason-react-native/blob/scrolltoexample/reason-react-navigation/src/Navigation.re) bindings haven't implemented `setParams` yet I had to spin some up to ge this demo done. If you look at the `js` version above, it calls `setParams` which takes a `json` object with a `key` and a `value`. In keeping with how the bindings are written, we can reproduce the passed in value using [`bucklescripts`](https://bucklescript.github.io/docs/en/object-2#creation) object creation method. That is what I did below in the `reason` example. I messed with it for a bit, unsuccessfully, before I jumped into the [reason-discord](https://discord.gg/RQ7vZ3) channel and asked the question. [John Jackson](https://johnridesa.bike/) the author of the ReasonML chess game [coronate](https://github.com/johnridesabike/coronate) chimes in wiht the link to the `bucklescript` docs. This worked immediately. The problem now is getting this one function to work with the `reason-react-navigation` bindings we are using for all these demos. I ended up creating a module `NavUtils.re` with two lines of code. An `include` reference to the `ReactNavigation.Navigation` module which copies every thing from that module to the current one. So in the end, we have all of `ReactNavigation.Navigation` plus our new `setParams` function. You can apparently, now use either `NavUtils` or `ReactNavigation.Navigation` interchangeably.
+
+```reason
+include ReactNavigation.Navigation;
+[@bs.send] external setParams: (t, Js.t({..})) => unit = "setParams";
+```
+
+```reason
+[@react.component]
+  let make = (~navigation: Navigation.t) => {
+    // create a `bs.obj` that we will pass to `setParams`
+    // typing is Js.t(< otherParam : string >) which matches the type we wrote in our `NavUtils` module, which was `Js.t({..})`. When you see the doulbe dots, tell yourself, that is the type for the `Bucklescript interop object`
+    let params = {"otherParam": "Updated!"};
+
+    <Screen name="Details Screen">
+      <Button
+        title="Update the title"
+        onPress={_ =>
+          navigation->NavUtils.setParams(params)
+        }
+      />
+      /* rest of your component*/
+    </Screen>;
+  };
+
+  make->NavigationOptions.setDynamicNavigationOptions(params => {
+    let title = params##navigation->Navigation.getParamWithDefault("otherParam", "A Nested Details Screen");
+    (NavigationOptions.t(~title, ()));
+  });
+```

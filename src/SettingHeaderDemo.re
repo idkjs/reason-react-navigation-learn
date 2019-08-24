@@ -2,25 +2,30 @@ open ReactNative;
 
 open ReactNavigation;
 module HomeScreen = {
+  //  open ReactNavigation;
   [@react.component]
   let make = (~navigation: Navigation.t) => {
     // trying this to see if we can work towards json serializable values to use with deeplinking as mentioned here: https://reactnavigation.org/docs/en/params.html
-    let bucklescript = {
-      "info": {
-        itemId: 86,
-        otherParam: "anything you want here",
-      },
-    };
+    // let bucklescript = {
+    //   "info": {
+    //     itemId: 86,
+    //     otherParam: "anything you want here",
+    //   },
+    // };
 
-    let param = bucklescript##info;
+    // let param = bucklescript##info;
+    let param = {
+        "itemId": 86,
+        "otherParam": "anything you want here",
+      };
     Js.log2("TEST", Js.Json.test(param, Object)); // true
     <Screen name="Home Screen">
       <Button
         title="Go to Details"
         onPress={_ =>
           navigation->Navigation.navigateWithParams("Details", param)
-          // {"itemId": 86, "otherParam": "anything you want here"},
         }
+        // {"itemId": 86, "otherParam": "anything you want here"},
         // js version
         // onPress={() => {
         //     /* 1. Navigate to the Details route with params */
@@ -32,9 +37,13 @@ module HomeScreen = {
       />
     </Screen>;
   };
-  make->NavigationOptions.setNavigationOptions(NavigationOptions.t(~title="Home", ()));
+  make->NavigationOptions.setNavigationOptions(
+    NavigationOptions.t(~title="Home", ()),
+  );
 };
+
 module DetailsScreen = {
+
   [@react.component]
   let make = (~navigation: Navigation.t) => {
     // in reason-react-native you have to use `navigateWithParams` to get be able to use the default value behaviour shown in the example here: https://reactnavigation.org/docs/en/params.html
@@ -48,6 +57,8 @@ module DetailsScreen = {
       );
     // Js.log2("itemId: ",itemId);
     // Js.log2("otherParam: ",otherParam);
+
+    // let params = {"otherParam": "Updated!"};
 
     <View
       style=Style.(
@@ -71,12 +82,22 @@ module DetailsScreen = {
         title="Go to Home"
         onPress={_ => navigation->Navigation.navigate("Home")}
       />
+      <Button
+        title="Update the title"
+        onPress={_ =>
+          navigation->NavUtils.setParams({"otherParam": "Updated!"})}
+      />
       <Button title="Go back" onPress={_ => navigation->Navigation.goBack} />
     </View>;
   };
   make->NavigationOptions.setDynamicNavigationOptions(params => {
-    let title = params##navigation->Navigation.getParamWithDefault("otherParam", "A Nested Details Screen");
-    (NavigationOptions.t(~title, ()));
+    let title =
+      params##navigation
+      ->Navigation.getParamWithDefault(
+          "otherParam",
+          "A Nested Details Screen",
+        );
+    NavigationOptions.t(~title, ());
   });
 };
 module SettingsScreen = {
