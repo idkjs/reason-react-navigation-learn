@@ -22,6 +22,10 @@ module DetailsScreen = {
         //  `push` in js, lets you indicate that you want to go to that screen anyway.
         onPress={_ => navigation->Navigation.navigate("Details")}
       />
+      <Button
+          title="Go back"
+          onPress={_ => navigation->Navigation.goBack}
+        />
     </Screen>;
   };
 };
