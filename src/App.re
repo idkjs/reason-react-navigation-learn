@@ -1,10 +1,23 @@
 open ReactNative;
 open ReactNavigation;
-
+module MyScreen = {
+  [@react.component]
+  let make = (~navigation: Navigation.t) => {
+    <Screen name="NavEvents Screen">
+      <NavigationEventsScreen navigation />
+    </Screen>;
+  };
+};
 module HomeScreen = {
   [@react.component]
   let make = (~navigation: Navigation.t) => {
     <Screen name="Home Screen">
+      <NavigationEvents
+        onWillFocus={payload => Js.log2("will focus", payload)}
+        onDidFocus={payload => Js.log2("did focus", payload)}
+        onWillBlur={payload => Js.log2("will blur", payload)}
+        onDidBlur={payload => Js.log2("did blur", payload)}
+      />
       <Button
         title="Go to Details"
         onPress={_ => navigation->Navigation.navigate("Details")}
@@ -28,15 +41,24 @@ module DetailsScreen = {
         title="Go to Home"
         onPress={_ => navigation->Navigation.navigate("Home")}
       />
+      <Button
+        title="Go to NavEvents Screen"
+        onPress={_ => navigation->Navigation.navigate("NavEvents")}
+      />
       //  `popToTop` take you to the top route in the current stack so this will go back to `Home` route..
       <Button
         title="PopToTop"
         onPress={_ => navigation->Navigation.popToTop}
       />
-// here im trying to `navigateWithParams` but I dont have any params I dont think. This compiles but doesn nothing.
+      // here im trying to `navigateWithParams` but I dont have any params I dont think. This compiles but doesn nothing.
       <Button
         title="NavigateTo RouteName"
-        onPress={_ => navigation->Navigation.navigateWithParams("NewRoute",{"route":Js.Obj.empty()})}
+        onPress={_ =>
+          navigation->Navigation.navigateWithParams(
+            "NewRoute",
+            {"route": Js.Obj.empty()},
+          )
+        }
       />
     </Screen>;
   };
@@ -47,6 +69,7 @@ module RootStack = {
       make({
         "Home": HomeScreen.make,
         "Details": DetailsScreen.make,
+        "NavEvents": MyScreen.make,
         "initialRouteName": "Details",
       })
     );
