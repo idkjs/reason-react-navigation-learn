@@ -33,6 +33,11 @@ module DetailsScreen = {
         title="PopToTop"
         onPress={_ => navigation->Navigation.popToTop}
       />
+// here im trying to `navigateWithParams` but I dont have any params I dont think. This compiles but doesn nothing.
+      <Button
+        title="NavigateTo RouteName"
+        onPress={_ => navigation->Navigation.navigateWithParams("NewRoute",{"route":Js.Obj.empty()})}
+      />
     </Screen>;
   };
 };
