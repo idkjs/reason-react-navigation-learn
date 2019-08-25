@@ -574,3 +574,55 @@ make->NavigationOptions.setDynamicNavigationOptions(params => {
 This is what it looks like:
 
 ![overriding-shared-options](./overriding-shared-options.gif)
+
+## [Custom Header Title/Replacing the title with a custom component](https://reactnavigation.org/docs/en/headers.html#replacing-the-title-with-a-custom-component)
+
+```js
+class LogoTitle extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('./spiro.png')}
+        style={{ width: 30, height: 30 }}
+      />
+    );
+  }
+}
+
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    // headerTitle instead of title
+    headerTitle: <LogoTitle />,
+  };
+
+  /* render function, etc */
+}
+```
+
+Using `ReasonML` I had to do a few things to get this to work. The `reason-react-navigation` bindings don't have `initialRouteName` and `defaultNavigationOptions` so I created [StackUtils.re]("./src/bindings/StackUtils.re") which copies over all of `ReactNavigation.StackNavigator`  and overides the definition of `config` so that it has just the properties from `react-navigation` that I need to reproduce the example. It looks like this:
+
+```reason
+module LogoTitle = {
+  [@react.component]
+  let make = () => {
+    <Image
+      source=Image.Source.fromRequired(Packager.require("./assets/spiro.png"))
+      style=Style.(style(~width=30.->dp, ~height=30.->dp, ()))
+    />;
+  };
+};
+```
+
+Then in `HomeScreen` module:
+
+```reason
+  make->NavigationOptions.(setNavigationOptions(t(
+    // ~title="Home",
+    // headerTitle instead of title
+      ~headerTitle=NavigationOptions.HeaderTitle.element(<LogoTitle />),
+     ())));
+```
+
+This is what it looks like:
+
+![custom-header-title](./custom-header-title.png)
