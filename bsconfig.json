@@ -9,7 +9,8 @@
      "reason-react-native",
      "reason-react-navigation",
      "reason-expo"
-    ],
+  ],
+  "ppx-flags":["get_in_ppx/ppx"],
   "sources": [
     {
       "dir": "src",

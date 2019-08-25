@@ -23,7 +23,8 @@
     "reason-react-navigation": "3.11.0-alpha.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^6.0.0"
+    "babel-preset-expo": "^6.0.0",
+    "get_in_ppx": "1.0.2"
   },
   "private": true
 }
