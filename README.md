@@ -598,8 +598,7 @@ class HomeScreen extends React.Component {
   /* render function, etc */
 }
 ```
-
-Using `ReasonML` I had to do a few things to get this to work. The `reason-react-navigation` bindings don't have `initialRouteName` and `defaultNavigationOptions` so I created [StackUtils.re]("./src/bindings/StackUtils.re") which copies over all of `ReactNavigation.StackNavigator`  and overides the definition of `config` so that it has just the properties from `react-navigation` that I need to reproduce the example. It looks like this:
+ReasonML Version:
 
 ```reason
 module LogoTitle = {
@@ -626,3 +625,41 @@ Then in `HomeScreen` module:
 This is what it looks like:
 
 ![custom-header-title](./custom-header-title.png)
+
+## [Adding a button to the header](https://reactnavigation.org/docs/en/header-buttons.html#adding-a-button-to-the-header)
+
+```js
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    headerTitle: <LogoTitle />,
+    headerRight: (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Info"
+        color="#fff"
+      />
+    ),
+  };
+}
+```
+ReasonML Version:
+
+
+In `HomeScreen` module:
+
+```reason
+  make->NavigationOptions.(setNavigationOptions(t(
+    // ~title="Home",
+    // headerTitle instead of title
+      ~headerTitle=NavigationOptions.HeaderTitle.element(<LogoTitle />),
+      ~headerRight=<Button title="Info"
+        color="#fff" onPress={_e =>
+          Alert.alert(~title="This is a button!", ());
+        }
+      />,
+     ())));
+```
+
+This is what it looks like:
+
+![adding-header-button](./adding-header-button.png)
