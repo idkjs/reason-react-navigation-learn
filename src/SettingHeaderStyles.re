@@ -71,36 +71,41 @@ module AppContainer =
   AppContainer.Make({
     type screenProps = {. "someProp": int};
 
-    let navigator =
-      StackNavigator.make({
-        "Home": {
-          screen: HomeScreen.make,
-          navigationOptions: () => {
-            title: "Home",
-            headerStyle: Style.(style(~backgroundColor="#f4511e", ())),
-            headerTitleStyle: Style.(style(~fontWeight=`bold, ())),
-            headerTintColor: "#fff",
-          },
+    let routes = {
+      "Home": {
+        screen: HomeScreen.make,
+        navigationOptions: () => {
+          title: "Home",
         },
-        "Details": {
-          screen: DetailsScreen.make,
-          navigationOptions: (params: {. navigation: Navigation.t}) => {
-            let navigation = params##navigation;
-            let title =
-              navigation->Navigation.getParamWithDefault(
-                "otherParam",
-                "A Nested Details Screen",
-              );
-
+      },
+      "Details": {
+        screen: DetailsScreen.make,
+        navigationOptions: (params: {. navigation: Navigation.t}) => {
+          let navigation = params##navigation;
+          let title =
+            navigation->Navigation.getParamWithDefault(
+              "otherParam",
+              "A Nested Details Screen",
+            );
+            // here we have to do `title:title` or change the name of `let title` identifier because the compiler will pun it away to `title` instead of `{title}` which compiles it away.
             {
-              title,
-              headerStyle: Style.(style(~backgroundColor="#f4511e", ())),
-              headerTitleStyle: Style.(style(~fontWeight=`bold, ())),
-              headerTintColor: "#fff",
+              title:title,
             };
-          },
         },
-      });
+      },
+    };
+    let configFromHomeScreen = {
+      "headerStyle": Style.(style(~backgroundColor="#f4511e", ())),
+      "headerTintColor": "#fff",
+      "headerTitleStyle": Style.(style(~fontWeight=`bold, ())),
+    };
+    let configOptions = StackUtils.config(
+        ~initialRouteName="Home",
+        /* The header config from HomeScreen is now here */
+        ~defaultNavigationOptions=configFromHomeScreen,
+        (),
+      )
+    let navigator = StackNavigator.(makeWithConfig(routes, configOptions));
   });
 
 [@react.component]

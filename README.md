@@ -279,40 +279,70 @@ class HomeScreen extends React.Component {
 }
 ```
 
-Using ReasonML:
+Using `ReasonML` I had to do a few things to get this to work. The `reason-react-navigation` bindings don't have `initialRouteName` and `defaultNavigationOptions` so I created [StackUtils.re]("./src/bindings/StackUtils.re") which copies over all of `ReactNavigation.StackNavigator`  and overides the definition of `config` so that it has just the properties from `react-navigation` that I need to reproduce the example. It looks like this:
 
 ```reason
-[@react.component]
-  let make = (~navigation: Navigation.t) => {
-    <View
-      style=Style.(
-        style(~flex=1., ~alignItems=`center, ~justifyContent=`center, ())
-      )>
-      <Text> {"Home Screen" |> React.string} </Text>
-      /* rest of your component*/
-    </View>;
-  };
+// include this file: https://github.com/reasonml-community/reason-react-native/blob/53dc7f9ebf6ae72fb88c2cfe957dc45b993265fa/reason-react-navigation/src/StackNavigator.re then override `config` definition
+include ReactNavigation.StackNavigator;
 
-    make->NavigationOptions.setNavigationOptions(
-    NavigationOptions.t(
-      ~headerTitleStyle=Style.(style(~fontWeight=`bold, ())),
-      ~headerTintColor="#fff",
-      ~headerStyle=Style.(style(~backgroundColor="#f4511e", ())),
-      ~title="Home",
-      (),
-    ),
-  );
-  // alternatively, define the prop and pass it to `NavigationOptions`
-  // let headerStyle = Style.(style(~backgroundColor="#f4511e", ()));
-  // let headerTitleStyle = Style.(style(~fontWeight=`bold, ()));
-  // let headerTintColor = "#fff";
-  // make->NavigationOptions.setNavigationOptions(
-  //   NavigationOptions.t(
-  //     ~headerTitleStyle,
-  //     ~headerTintColor,
-  //     ~headerStyle,
-  //     ~title="Home",
-  //     (),
-  //   ),
-  // );
+[@bs.obj]
+external config:
+  (
+    ~initialRouteName: string=?,
+    ~defaultNavigationOptions: Js.t('a)=?,
+    unit
+  ) =>
+  config =
+  "";
 ```
+
+Then I removed the `NavigatorOptions` calls from the `HomeScreen` and `DetailsScreen` modules and defined them in the `routes` object in `AppContainer`. I then use `StackUtils` to define our config object that we pass to `StackNavigator.makeWithConfig()`;
+
+```reason
+module AppContainer =
+  AppContainer.Make({
+    type screenProps = {. "someProp": int};
+
+    let routes = {
+      "Home": {
+        screen: HomeScreen.make,
+        navigationOptions: () => {
+          title: "Home",
+        },
+      },
+      "Details": {
+        screen: DetailsScreen.make,
+        navigationOptions: (params: {. navigation: Navigation.t}) => {
+          let navigation = params##navigation;
+          let title =
+            navigation->Navigation.getParamWithDefault(
+              "otherParam",
+              "A Nested Details Screen",
+            );
+            // here we have to do `title:title` or change the name of `let title` identifier because the compiler will pun it away to `title` instead of `{title}` which compiles it away.
+            {
+              title:title,
+            };
+        },
+      },
+    };
+    // create a `Js.t('a)` object containing the values we want to use as `defaultNavigationOptions`.
+    let configFromHomeScreen = {
+      "headerStyle": Style.(style(~backgroundColor="#f4511e", ())),
+      "headerTintColor": "#fff",
+      "headerTitleStyle": Style.(style(~fontWeight=`bold, ())),
+    };
+    // define our `config` object passing in `configFromHomeScreen` to `~defaultNavigationOptions`
+    let configOptions = StackUtils.config(
+        ~initialRouteName="Home",
+        /* The header config from HomeScreen is now here */
+        ~defaultNavigationOptions=configFromHomeScreen,
+        (),
+      );
+    let navigator = StackNavigator.(makeWithConfig(routes, configOptions));
+  });
+```
+
+This is what it looks like:
+
+![sharing-options](./sharingOptions.gif)
