@@ -104,7 +104,7 @@ module AppContainer =
         /* The header config from HomeScreen is now here */
         ~defaultNavigationOptions=configFromHomeScreen,
         (),
-      )
+      );
     let navigator = StackNavigator.(makeWithConfig(routes, configOptions));
   });
 

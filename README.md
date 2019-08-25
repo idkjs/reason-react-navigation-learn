@@ -346,3 +346,134 @@ module AppContainer =
 This is what it looks like:
 
 ![sharing-options](./sharingOptions.gif)
+
+## [Configuring `navigationOptions`](https://reactnavigation.org/docs/en/headers.html#sharing-common-navigationoptions-across-screens)
+
+```js
+const Home = createStackNavigator(
+  {
+    Feed: ExampleScreen,
+    Profile: ExampleScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      title: 'Home',
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#000',
+      },
+    },
+    navigationOptions: {
+      tabBarLabel: 'Home!',
+    },
+  }
+);
+```
+
+### Define the routes seperately for readability
+
+```reason
+  let routes = {
+    "Feed": {
+      screen: ExampleScreen.make,
+    },
+    "Profile": {
+      screen: ExampleScreen.make,
+    },
+  };
+```
+
+### Define the defaultNavigationOptions seperately for readability
+
+```reason
+  let defaultNavigationOptions = {
+    "title": "Home",
+    "headerTintColor": "#fff",
+    "headerStyle": Style.(style(~backgroundColor="#000", ())),
+  };
+```
+
+### Use StackUtils version of `StackNavigator.config` which has the `defaultNavigationOptions` option available on it.
+
+```reason
+  let configOptions =
+    StackUtils.config(
+      ~defaultNavigationOptions,
+      (),
+    );
+```
+
+### Generate Config
+
+Notes: `tabBarLabel` is represented in the binding as `title` as far as I can tell. There is a `TabBarLabel` module  but I can not get it to pass in this format yet. Instead, I used the `setNavigationOptions` method from the bindings found here: https://github.com/reasonml-community/reason-react-native/blob/21a72c601c12adaf09ebd0cd55d57ecb59a650f8/reason-react-navigation/src/NavigationOptions.re#L165 which is having the desired effect apparently.
+
+Use StackUtils version of `StackNavigator.config` which has the `defaultNavigationOptions` option available on it.
+
+```reason
+  let configOptions =
+    StackUtils.config(
+      ~defaultNavigationOptions,
+      (),
+    );
+```
+
+### Create the `navigator`
+
+Pass the `routes` and `config` to our `StackNavigator`
+
+```reason
+  let navigator = StackNavigator.(makeWithConfig(routes, configOptions));
+```
+
+### Use `setNavigationOptions` from bindings
+
+Use `setNavigationOptions` to create the title per the demo. See notes above on `tabBarLabel`. The `title` property here overrides the `tabBarLabel` title, not the `title` we set in `defaultNavigationOptions`.
+
+```reason
+  navigator->NavigationOptions.setNavigationOptions(
+    NavigationOptions.t(~title="Home!", ()),
+  );
+```
+
+All together:
+
+```reason
+module Home = {
+  // define the routes seperately for readability
+  let routes = {
+    "Feed": {
+      screen: ExampleScreen.make,
+    },
+    "Profile": {
+      screen: ExampleScreen.make,
+    },
+  };
+
+    // define the defaultNavigationOptions seperately for readability
+
+  let defaultNavigationOptions = {
+    "title": "Home",
+    "headerTintColor": "#fff",
+    "headerStyle": Style.(style(~backgroundColor="#000", ())),
+  };
+  // `tabBarLabel` is represented in the binding as `title` as far as I can tell. There is a `TabBarLabel` module  but I can not get it to pass in this format yet. Instead, I used the `setNavigationOptions` method from the bindings found here: https://github.com/reasonml-community/reason-react-native/blob/21a72c601c12adaf09ebd0cd55d57ecb59a650f8/reason-react-navigation/src/NavigationOptions.re#L165 which is having the desired effect apparently.
+
+  // use StackUtils version of `StackNavigator.config` which has the `defaultNavigationOptions` option available on it.
+  let configOptions =
+    StackUtils.config(
+      ~defaultNavigationOptions,
+      (),
+    );
+
+  // pass the `routes` and `config` to our `StackNavigator`
+  let navigator = StackNavigator.(makeWithConfig(routes, configOptions));
+  // use `setNavigationOptions` to create the title per the demo. See notes above on `tabBarLabel`. The `title` property here overrides the `tabBarLabel` title, not the `title` we set in `defaultNavigationOptions`.
+  navigator->NavigationOptions.setNavigationOptions(
+    NavigationOptions.t(~title="Home!", ()),
+  );
+};
+```
+
+This is what it looks like:
+
+![overriding-options](./overrideTitle.png)
