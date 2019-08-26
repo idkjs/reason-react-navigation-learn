@@ -1367,6 +1367,11 @@ bs-platform@^5.0.4:
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-5.0.6.tgz#88c13041fb020479800de3d82c680bf971091425"
   integrity sha512-6Boa2VEcWJp2WJr38L7bp3J929nYha7gDarjxb070jWzgfPJ/WbzjipmSfnu2eqqk1MfjEIpBipbPz6n1NISwA==
 
+bsdoc@6.0.0-alpha:
+  version "6.0.0-alpha"
+  resolved "https://registry.yarnpkg.com/bsdoc/-/bsdoc-6.0.0-alpha.tgz#fc8815f8c3f0b78abeae78a5b62b6f988ff81896"
+  integrity sha512-kgNZ5qpQ5gSGaTVGibEGelKUyiLGGLFEMhCYrMRs+gBIKOy680wKEP9ztu1cGqP7wo7O4En7rcdLcM0j1eNz4A==
+
 bser@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/bser/-/bser-2.1.0.tgz#65fc784bf7f87c009b973c12db6546902fa9c7b5"
@@ -4103,14 +4108,6 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-"re-unstated-next@https://github.com/Raincal/re-unstated-next.git":
-  version "0.1.0"
-  resolved "https://github.com/Raincal/re-unstated-next.git#bca1aeda0da4aaea0d0e927773de601d805a4fcc"
-  dependencies:
-    react "^16.8.6"
-    react-dom "^16.8.6"
-    reason-react ">=0.7.0"
-
 react-clone-referenced-element@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.0.tgz#9cdda7f2aeb54fea791f3ab8c6ab96c7a77d0158"
@@ -4129,7 +4126,7 @@ react-devtools-core@^3.6.0:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
-react-dom@>=16.8.1, react-dom@^16.8.6:
+react-dom@>=16.8.1:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0.tgz#5e65527a5e26f22ae3701131bcccaee9fb0d3962"
   integrity sha512-YFT2rxO9hM70ewk9jq0y6sQk8cL02xm4+IzYBz75CQGlClQQ1Bxq0nhHF6OtSbit+AIahujJgb/CPRibFkMNJQ==
@@ -4304,7 +4301,7 @@ react@16.8.3:
     prop-types "^15.6.2"
     scheduler "^0.13.3"
 
-react@>=16.8.1, react@^16.8.6:
+react@>=16.8.1:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
   integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==
@@ -4358,7 +4355,7 @@ reason-react-navigation@3.11.0-alpha.0:
   resolved "https://registry.yarnpkg.com/reason-react-navigation/-/reason-react-navigation-3.11.0-alpha.0.tgz#4333c0cc1f42490e968a6d80b260a21aff360e73"
   integrity sha512-o07BjQ2BvUe9NqwUWnclZfIGBrWb3+AUQKw5d0475zEZXOE8Y57k7BY51iHvr1czvTeh8B8Zk01xxI5ZCvHZAA==
 
-reason-react@>=0.7.0, reason-react@^0.7.0:
+reason-react@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/reason-react/-/reason-react-0.7.0.tgz#46a975c321e81cd51310d7b1a02418ca7667b0d6"
   integrity sha512-czR/f0lY5iyLCki9gwftOFF5Zs40l7ZSFmpGK/Z6hx2jBVeFDmIiXB8bAQW/cO6IvtuEt97OmsYueiuOYG9XjQ==

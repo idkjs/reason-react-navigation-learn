@@ -1,4 +1,5 @@
 {
+  "name": "example",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -7,7 +8,8 @@
     "eject": "expo eject",
     "build": "bsb -make-world -clean-world",
     "clean": "bsb -clean-world",
-    "watch": "bsb -make-world -clean-world -w"
+    "watch": "bsb -make-world -clean-world -w",
+    "docs": "bsdoc build Example"
   },
   "dependencies": {
     "@glennsl/bs-json": "5.0.0",
@@ -24,7 +26,8 @@
     "reason-react-navigation": "3.11.0-alpha.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^6.0.0"
+    "babel-preset-expo": "^6.0.0",
+    "bsdoc": "6.0.0-alpha"
   },
   "private": true
 }

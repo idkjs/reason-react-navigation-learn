@@ -1,5 +1,5 @@
 {
-  "name": "my-reason-expo-app",
+  "name": "example",
   "reason": {
     "react-jsx": 3
   },
@@ -8,8 +8,6 @@
     "reason-react",
      "reason-react-native",
      "reason-react-navigation",
-     "@glennsl/bs-json",
-     "re-unstated-next",
      "reason-expo"
   ],
   "ppx-flags":[],

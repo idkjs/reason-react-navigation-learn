@@ -1,5 +1,7 @@
 # [Header Interaction with Screen Component](https://reactnavigation.org/docs/en/header-buttons.html#header-interaction-with-its-screen-component)
 
+This is the `js` version from the <https://reactnavigation.org/docs/en/header-buttons.html#header-interaction-with-its-screen-component>
+
 ```js
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
