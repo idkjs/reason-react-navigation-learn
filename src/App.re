@@ -1,5 +1,3 @@
-// let app = SettingHeaderStyles.make;
-// let app = OverrideOptionsDemo.make;
-// let app = OverrideSharedOptionsDemo.make;
-// let app = CustomHeaderTitleDemo.make;
-let app = HeaderButtonDemo.make;
+let app = Demo.make;
+// uncomment to run UnstatedDemo
+// let app = UnstatedDemo.make;

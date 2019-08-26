@@ -8,9 +8,11 @@
     "reason-react",
      "reason-react-native",
      "reason-react-navigation",
+     "@glennsl/bs-json",
+     "re-unstated-next",
      "reason-expo"
   ],
-  "ppx-flags":["get_in_ppx/ppx"],
+  "ppx-flags":[],
   "sources": [
     {
       "dir": "src",
