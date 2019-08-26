@@ -1,14 +1,14 @@
 {
-  "name": "example",
+  "name": "header-button-screen-interaction",
   "reason": {
     "react-jsx": 3
   },
   "bsc-flags": ["-bs-super-errors"],
   "bs-dependencies": [
     "reason-react",
-     "reason-react-native",
-     "reason-react-navigation",
-     "reason-expo"
+    "reason-react-native",
+    "reason-react-navigation",
+    "reason-expo"
   ],
   "ppx-flags":[],
   "sources": [

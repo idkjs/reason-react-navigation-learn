@@ -1,5 +1,5 @@
 {
-  "name": "example",
+  "name": "header-button-screen-interaction",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -9,7 +9,7 @@
     "build": "bsb -make-world -clean-world",
     "clean": "bsb -clean-world",
     "watch": "bsb -make-world -clean-world -w",
-    "docs": "bsdoc build Example"
+    "docs": "./node_modules/.bin/bsdoc build HeaderDemo"
   },
   "dependencies": {
     "@glennsl/bs-json": "5.0.0",
